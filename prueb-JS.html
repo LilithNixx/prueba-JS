@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>prueba js</title>
+</head>
+<body>
+    <div class="container">
+        <p>Texto de prueba</p>
+        <button type="button" class="btn btn-color" id="btn-color">color</button>
+        <button type="button" class="btn btn-tipo" id="btn-tipo">tipo</button>
+        
+        <div class="container2">
+            <ul class="modificados" id="modificados">
+                <template class="template-text">
+                    <li class="li-text">
+                        <span>Texto prueba</span>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </div>
+
+    
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            width: 400px;
+            height: 400px;
+
+            margin: auto;
+            margin-top: 40px;
+            position: relative;
+
+            border: 1px solid brown;
+            box-shadow: 5px 5px 4px rgb(19, 7, 7);
+        }
+
+        .container2 {
+            width: 300px;
+            height: 50px;
+            
+            position: relative;
+            top: 250px;
+            left: 50px;
+
+            border: 1px solid brown;
+            background: rgb(228, 227, 227);
+        }
+        .container p {
+            position: absolute;
+            bottom: 240px;
+            right: 80px;
+            
+            color: brown;
+            font-size: 30px;
+            font-weight: 10px;
+        }
+
+        .btn {
+            position: absolute;
+            bottom: 180px;
+            right: 200px;
+            
+            padding: 6px;
+            
+            border: 1px solid rgba(165, 42, 42, 0.603);
+            border-radius: 3px;
+            background: burlywood;
+            color: brown;
+            font-size: 15px;
+            font-weight: 20px;
+        }
+
+        .btn:hover {
+            color: white;
+            box-shadow: 3px 3px 2px rgb(24, 19, 13);
+            font-size: 18px;
+        }
+
+        .btn-tipo {
+           right: 120px;
+        }
+
+        .li-text {
+            text-align: center;
+            padding-top: 3px;
+
+            list-style-type: none;
+            font-size: 25px;
+        }
+
+    </style>
+
+    <script>
+        //capturar botones:
+        const btnColor = document.querySelector(".btn-color");
+        const btnTipo = document.querySelector(".btn-tipo");
+        const container = document.querySelector(".container");
+        const container2 = document.querySelector(".container2");
+        const templateText = document.querySelector(".template-text");
+        const parrafo = document.querySelector("p");
+
+        //capturar evento de todo el documento:
+        container.addEventListener("click", (e) => {
+            //console.log(e.target.id);
+            //Si se clickea el botón color se modifica el color del texto:
+            if (e.target.id === "btn-color"){
+               
+                color();
+            }
+            //Si se clickea el botón tipo se modifica el tipo de letra del texto:
+            if (e.target.id === "btn-tipo"){
+               
+                tipo();
+            }
+        });
+
+        const color = (e) => {
+
+            let numColor = generarHexa();
+            const p = parrafo.style.color = numColor;
+            pintarTextos(p);
+        };
+
+        const tipo = (e) => {
+
+            let index = Math.floor(Math.random() * 21);
+            const font = pickaFont(index);
+            
+            const p = parrafo.style.fontFamily = font;
+            pintarTextos(p);
+        };
+
+        const pintarTextos = (p) => {
+            container2.textContent = "";
+            
+            const clone = templateText.content.cloneNode(true);
+            clone.querySelector('span').textContent = p;
+
+            container2.appendChild(clone);
+        };
+
+        const generarHexa = () => {
+            
+            const symbols = "0123456789ABCDEF";
+            let color = "#";
+
+            for(let i = 0; i < 6; i++){
+                //Puedo trabajar con los string como si fuesen arreglos.
+                //Multiplicamos por 16 porque es la cantidad de elementos que tenemos en el arreglo.
+                color = color + symbols[Math.floor(Math.random() * 16)];
+            }  
+
+            return color
+        } ;   
+
+        const pickaFont = (index) => {
+            const fonts = ['Times New Roman', 'Arial', 'Arial Black', 'serif', 'Comic Sans MS', 'Constantia', 'Courier', 'Ebrima', 'Ink free', 'Microsoft Himalaya', 'Small Fonts', 'Gabriola', 'Cursive', 'Verdana', 'MV Boli', 'Bahnschrift', 'Mongolian Baliti', 'Lucida Sans', 'Segoe Print', 'NSimSun', 'Tahoma'];
+
+            return fonts[index]
+        };
+    </script>
+</body>
+</html>
